@@ -6,11 +6,11 @@ The project was made for the assignment *“15. Django web application”*, usin
 
 ## Submission details
 
-- **Group name:** _fill in_
-- **Members:** _full names_
-- **Screenshots:** _add 1–2 screenshots of the running app, e.g. in a `screenshots/` folder_
-- **GitHub repository:** _link_
-- **Agents and LLMs used:** Claude Opus 5.5 by Anthropic (claude.ai chat). _Add any others you used._
+- **Group name:** Ares
+- **Members:** Bikash Bashyal, Biswash Pokhrel, Diwas Kharel.
+- **Screenshots:** submitted with assignment.
+- **GitHub repository:** https://github.com/bikash-crypto/reading-log
+- **Agents and LLMs used:** Claude Opus 5.5
 
 ## What it does
 
