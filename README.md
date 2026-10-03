@@ -85,4 +85,4 @@ library/                   the app
 4. Asked the AI for views, URLs, templates and CSS for a public-facing site.
 
 **Reflection: can AI create the views and templates, and how fast and easy was it?**
-_Write your own answer here, e.g. how long each step took, what worked first time, what you had to fix or ask again, and what you learned about Django along the way._
+Yes. The AI generated the models, the admin interface, the views, URLs, templates and CSS, and they all worked on the first run. Writing the code took only minutes; most of our time went into setting things up on our own computer. We ran into two problems: we ran a command from the wrong folder, and one file was named manage.py.py instead of manage.py. We sent screenshots of the errors to the AI, and it explained how to fix them each time. Overall it took about almost 30min from start to finish. It was fast and easy, but we still needed basic knowledge of the command line and of how a Django project fits together (models = migrations = admin = views = URLs = templates). We learned the most when something went wrong and we had to understand why.
