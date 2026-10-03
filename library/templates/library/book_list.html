@@ -1,0 +1,43 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+  <div class="shelf-head">
+    <h1>My shelf</h1>
+    <form class="search" method="get" role="search">
+      {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+      <label class="visually-hidden" for="q">Search by title or author</label>
+      <input id="q" type="search" name="q" value="{{ query }}" placeholder="Search title or author">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <nav class="tabs" aria-label="Filter by reading status">
+    {% for value, label, count in tabs %}
+      <a href="?{% if value %}status={{ value }}{% endif %}{% if query %}{% if value %}&amp;{% endif %}q={{ query|urlencode }}{% endif %}"
+         {% if value == status %}aria-current="page"{% endif %}>
+        {{ label }} <span class="count">{{ count }}</span>
+      </a>
+    {% endfor %}
+  </nav>
+
+  {% if books %}
+    {% with shelf_books=books %}{% include 'library/_shelf.html' %}{% endwith %}
+    <p class="legend"><span class="legend-ribbon" aria-hidden="true"></span> A ribbon marks the books you are reading now. Taller and thicker spines are longer books.</p>
+  {% elif query %}
+    <div class="empty">
+      <p>No books match “{{ query }}”.</p>
+      <p><a href="?{% if status %}status={{ status }}{% endif %}">Clear the search</a></p>
+    </div>
+  {% elif status %}
+    <div class="empty">
+      <p>Nothing here yet.</p>
+      <p><a href="{% url 'library:book_list' %}">Show all books</a></p>
+    </div>
+  {% else %}
+    <div class="empty">
+      <p>Your shelf is empty.</p>
+      <p><a class="button" href="{% url 'library:book_create' %}">Add your first book</a></p>
+      <p class="hint">Want sample data? Run <code>python3 manage.py seed_books</code>.</p>
+    </div>
+  {% endif %}
+{% endblock %}

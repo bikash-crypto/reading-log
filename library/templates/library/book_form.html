@@ -1,0 +1,55 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{% if object %}Edit {{ object.title }}{% else %}Add a book{% endif %} | Reading log{% endblock %}
+
+{% block content %}
+  <h1>{% if object %}Edit “{{ object.title }}”{% else %}Add a book{% endif %}</h1>
+
+  <form class="book-form" method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+
+    <fieldset>
+      <legend>The book</legend>
+      {% include 'library/_field.html' with field=form.title %}
+      {% include 'library/_field.html' with field=form.author %}
+      <p class="hint">Author not listed? Add them in the <a href="{% url 'admin:library_author_add' %}">admin</a>.</p>
+      {% include 'library/_field.html' with field=form.genres %}
+    </fieldset>
+
+    <fieldset>
+      <legend>Details</legend>
+      <div class="row">
+        {% include 'library/_field.html' with field=form.year_published %}
+        {% include 'library/_field.html' with field=form.pages %}
+        {% include 'library/_field.html' with field=form.isbn %}
+      </div>
+      <div class="field">
+        <span class="label">Spine colour</span>
+        <div class="swatches">
+          {% for radio in form.cover %}
+            <label class="swatch swatch--{{ radio.data.value }}">{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>
+          {% endfor %}
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>My reading</legend>
+      <div class="row">
+        {% include 'library/_field.html' with field=form.status %}
+        {% include 'library/_field.html' with field=form.rating %}
+      </div>
+      <div class="row">
+        {% include 'library/_field.html' with field=form.started_on %}
+        {% include 'library/_field.html' with field=form.finished_on %}
+      </div>
+      {% include 'library/_field.html' with field=form.notes %}
+    </fieldset>
+
+    <p class="actions">
+      <button type="submit">{% if object %}Save changes{% else %}Add to shelf{% endif %}</button>
+      <a class="button button--quiet" href="{% if object %}{{ object.get_absolute_url }}{% else %}{% url 'library:book_list' %}{% endif %}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

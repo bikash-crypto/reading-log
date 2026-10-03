@@ -1,0 +1,23 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Authors | Reading log{% endblock %}
+
+{% block content %}
+  <h1>Authors</h1>
+  {% if authors %}
+    <ul class="authors">
+      {% for author in authors %}
+        <li>
+          <a href="{{ author.get_absolute_url }}">{{ author.name }}</a>
+          <span class="meta">{% if author.country %}{{ author.country }}{% endif %}{% if author.country and author.birth_year %}, {% endif %}{% if author.birth_year %}born {{ author.birth_year }}{% endif %}</span>
+          <span class="count">{{ author.book_count }} book{{ author.book_count|pluralize }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="empty">
+      <p>No authors yet.</p>
+      <p><a class="button" href="{% url 'admin:library_author_add' %}">Add an author in the admin</a></p>
+    </div>
+  {% endif %}
+{% endblock %}

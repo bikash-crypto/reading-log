@@ -1,0 +1,32 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Reading log{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Public+Sans:wght@400;600&display=swap">
+  <link rel="stylesheet" href="{% static 'library/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="{% url 'library:book_list' %}">Reading log</a>
+    <nav aria-label="Main">
+      <a href="{% url 'library:book_list' %}">Shelf</a>
+      <a href="{% url 'library:author_list' %}">Authors</a>
+      <a href="{% url 'library:book_create' %}">Add a book</a>
+      <a href="{% url 'admin:index' %}">Admin</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    {% if messages %}
+      <div class="messages" role="status">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

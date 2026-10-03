@@ -1,0 +1,15 @@
+{# A row of book spines standing on wooden shelves. Expects `shelf_books`. #}
+<ul class="shelf" aria-label="Books">
+  {% for book in shelf_books %}
+    <li class="slot">
+      <a class="spine spine--{{ book.cover }}{% if book.status == 'reading' %} spine--reading{% endif %}"
+         href="{{ book.get_absolute_url }}"
+         style="--h: {{ book.spine_height }}px; --w: {{ book.spine_width }}px"
+         title="{{ book.title }} by {{ book.author.name }}">
+        <span class="spine-title">{{ book.title }}</span>
+        <span class="spine-author">{{ book.author.name }}</span>
+        {% if book.status == 'reading' %}<span class="visually-hidden">(reading now)</span>{% endif %}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

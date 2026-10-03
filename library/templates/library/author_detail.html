@@ -1,0 +1,21 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ author.name }} | Reading log{% endblock %}
+
+{% block content %}
+  <p class="back"><a href="{% url 'library:author_list' %}">All authors</a></p>
+  <h1>{{ author.name }}</h1>
+  {% if author.country or author.birth_year %}
+    <p class="byline">{{ author.country }}{% if author.country and author.birth_year %}, {% endif %}{% if author.birth_year %}born {{ author.birth_year }}{% endif %}</p>
+  {% endif %}
+  {% if author.bio %}<div class="prose">{{ author.bio|linebreaks }}</div>{% endif %}
+
+  <h2>On my shelf</h2>
+  {% with shelf_books=author.books.all %}
+    {% if shelf_books %}
+      {% include 'library/_shelf.html' %}
+    {% else %}
+      <p class="empty">No books by {{ author.name }} yet. <a href="{% url 'library:book_create' %}">Add one</a>.</p>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

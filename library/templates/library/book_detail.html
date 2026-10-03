@@ -1,0 +1,45 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }} | Reading log{% endblock %}
+
+{% block content %}
+  <p class="back"><a href="{% url 'library:book_list' %}">Back to the shelf</a></p>
+
+  <article class="book">
+    <div class="cover cover--{{ book.cover }}" aria-hidden="true">
+      <span class="cover-title">{{ book.title }}</span>
+      <span class="cover-author">{{ book.author.name }}</span>
+    </div>
+
+    <div class="book-body">
+      <h1>{{ book.title }}</h1>
+      <p class="byline">by <a href="{{ book.author.get_absolute_url }}">{{ book.author.name }}</a></p>
+
+      <p class="status status--{{ book.status }}">{{ book.get_status_display }}</p>
+      {% if book.stars %}
+        <p class="stars" aria-label="Rated {{ book.rating }} out of 5">
+          {% for filled in book.stars %}<span class="{% if filled %}on{% endif %}">★</span>{% endfor %}
+        </p>
+      {% endif %}
+
+      <dl class="facts">
+        {% if book.year_published %}<dt>Published</dt><dd>{{ book.year_published }}</dd>{% endif %}
+        {% if book.pages %}<dt>Pages</dt><dd>{{ book.pages }}</dd>{% endif %}
+        {% if book.genres.all %}<dt>Genres</dt><dd>{{ book.genres.all|join:", " }}</dd>{% endif %}
+        {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
+        {% if book.started_on %}<dt>Started</dt><dd>{{ book.started_on|date:"j F Y" }}</dd>{% endif %}
+        {% if book.finished_on %}<dt>Finished</dt><dd>{{ book.finished_on|date:"j F Y" }}</dd>{% endif %}
+      </dl>
+
+      {% if book.notes %}
+        <h2>My notes</h2>
+        <div class="notes">{{ book.notes|linebreaks }}</div>
+      {% endif %}
+
+      <p class="actions">
+        <a class="button" href="{% url 'library:book_update' book.pk %}">Edit book</a>
+        <a class="button button--quiet" href="{% url 'library:book_delete' book.pk %}">Remove from shelf</a>
+      </p>
+    </div>
+  </article>
+{% endblock %}
